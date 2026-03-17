@@ -35,7 +35,7 @@ This project predicts customer churn for a bank using machine learning. The goal
   - Slightly more complex than RF but improves probability-based decision-making  
 
 ### 3. Ensemble (Random Forest + XGBoost)
-- **Metrics (class 1):** Precision: 0.66, Recall: 0.58, F1: 0.62, PR-AUC: 0.704  
+- **Metrics (class 1):** Precision: 0.64, Recall: 0.60, F1: 0.62, PR-AUC: 0.704  
 - **Business Perspective:**  
   - Higher precision → more confident predictions, fewer false positives  
   - Slightly lower recall → misses some churners  
