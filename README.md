@@ -1,65 +1,78 @@
-# Banking-Customer-Churn-Prediction
+# Banking Customer Churn Prediction
 
 ## Overview
-This project predicts customer churn for a bank using machine learning. The goal is to identify high-risk customers so that retention campaigns can be prioritized, improving customer retention and minimizing revenue loss.
 
-- **Dataset Features:** credit_score, age, tenure, balance, products_number, credit_card, active_member, estimated_salary, country, gender  
-- **Target:** churn (1 = churn, 0 = retained)  
-- **Challenge:** Imbalanced dataset (minority class = churners)  
+This project focuses on predicting customer churn in a banking environment using machine learning techniques. The objective is to identify customers at high risk of leaving, enabling targeted retention strategies and reducing potential revenue loss.
 
----
-
-## Preprocessing
-1. Dropped irrelevant columns (`customer_id`)  
-2. Encoded categorical features (`country`, `gender`, `credit_card`, `active_member`) with One-Hot Encoding  
-3. Scaled numerical features (`credit_score`, `age`, `tenure`, `balance`, `products_number`, `estimated_salary`)  
-4. Handled class imbalance with **SMOTE**  
-5. Optimized classification threshold using **precision-recall curves**  
+* **Target Variable:** Churn (1 = exited, 0 = retained)
+* **Key Features:** Credit score, age, tenure, balance, number of products, credit card status, activity status, estimated salary, geography, and gender
+* **Core Challenge:** Class imbalance in churn labels
 
 ---
 
-## Models Used
+## Data Preprocessing
 
-### 1. Random Forest (RF)
-- **Metrics (class 1):** Precision: 0.57, Recall: 0.70, F1: 0.63, PR-AUC: 0.688  
-- **Business Perspective:**  
-  - Catches most churners (high recall)  
-  - Simpler to deploy and maintain  
-  - Suitable if interpretability and fast retraining are priorities  
+* Removed non-informative identifiers (e.g., customer ID)
+* Applied **one-hot encoding** to categorical variables (geography, gender)
+* Scaled numerical features using standardization techniques
+* Addressed class imbalance using **SMOTE (Synthetic Minority Oversampling Technique)**
+* Optimized classification threshold using **precision-recall trade-off analysis**
 
-### 2. XGBoost
-- **Metrics (class 1):** Precision: 0.57, Recall: 0.70, F1: 0.63, PR-AUC: 0.719  
-- **Business Perspective:**  
-  - High recall and highest PR-AUC → better ranking of high-risk customers  
-  - Best choice for targeting retention campaigns effectively  
-  - Slightly more complex than RF but improves probability-based decision-making  
+---
 
-### 3. Ensemble (Random Forest + XGBoost)
-- **Metrics (class 1):** Precision: 0.64, Recall: 0.60, F1: 0.62, PR-AUC: 0.704  
-- **Business Perspective:**  
-  - Higher precision → more confident predictions, fewer false positives  
-  - Slightly lower recall → misses some churners  
-  - Useful if campaign budget is limited and prioritizing high-confidence customers is important  
+## Modeling Approach
+
+### Random Forest
+
+* Achieved strong performance with balanced precision and recall
+* Effective baseline model with robust handling of feature interactions
+* Easier to interpret and faster to deploy in production settings
+
+### XGBoost
+
+* Delivered the **best overall performance**, particularly in ranking high-risk customers
+* Achieved the highest **PR-AUC (~0.72)**, indicating superior precision-recall balance
+* Suitable for business scenarios requiring accurate prioritization of churn risk
+
+### Ensemble Model (RF + XGBoost)
+
+* Improved **precision (~0.64)**, reducing false positives
+* Slight trade-off in recall compared to individual models
+* Useful when targeting high-confidence churn predictions under budget constraints
 
 ---
 
 ## Workflow
-1. Baseline model training (RF)  
-2. Handle class imbalance with SMOTE  
-3. Hyperparameter tuning with GridSearchCV  
-4. Threshold optimization for F1-score  
-5. Model evaluation using precision, recall, F1-score, PR-AUC  
+
+1. Exploratory Data Analysis (EDA)
+2. Data preprocessing and feature transformation
+3. Baseline model development (Random Forest)
+4. Handling class imbalance with SMOTE
+5. Hyperparameter tuning using **GridSearchCV**
+6. Threshold optimization based on F1-score and PR curves
+7. Model comparison using precision, recall, F1-score, and PR-AUC
 
 ---
 
 ## Key Insights
-- XGBoost provides the **best trade-off between recall and probability ranking**  
-- Ensemble improves precision but reduces recall slightly  
+
+* **XGBoost outperforms other models** in identifying and ranking churn-prone customers
+* Precision-recall optimization significantly improves business decision-making over accuracy alone
+* Handling class imbalance is critical for improving recall of churners
 
 ---
 
 ## Conclusion
-For maximizing churn detection and targeting retention campaigns:  
-- **XGBoost** is the recommended model for business deployment  
-- **Random Forest** is a simpler alternative for faster retraining and interpretability  
-- **Ensemble** can be used for higher confidence predictions when minimizing false positives is crucial  
+
+* **XGBoost** is the most effective model for churn prediction and customer targeting
+* **Random Forest** provides a strong, interpretable baseline
+* **Ensemble approach** is beneficial when prioritizing prediction confidence
+
+---
+
+## Tech Stack
+
+* **Languages:** Python
+* **Libraries:** pandas, NumPy, scikit-learn, XGBoost, matplotlib, seaborn
+* **Techniques:** SMOTE, GridSearchCV, threshold tuning, ensemble modeling
+
